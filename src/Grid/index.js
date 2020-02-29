@@ -4,7 +4,8 @@ import axios from 'axios';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
+import '../ag-grid-overrides.scss'
 
 
 class Gridd extends Component {
@@ -16,16 +17,26 @@ class Gridd extends Component {
         field: "date", 
         editable: true, 
         width: 158, 
-        cellStyle: {'font-family': 'PT Sans', 'font-size': '12px'}
 
       }, {
         headerName: "Дистанция", 
         field: "distance", 
         editable: true, 
         width: 175,
-        cellStyle: {'font-family': 'PT Sans', 'font-size': '12px'}
       }],
       rowData: [{
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
         date: "Toyota", 
         distance: "Celica"
       }]
@@ -49,6 +60,7 @@ class Gridd extends Component {
         width: '335px' }}
       >
         <AgGridReact
+          rowHeight={40}
           enableSorting={true}
           columnDefs={this.state.columnDefs}
           rowData={this.state.rowData}>

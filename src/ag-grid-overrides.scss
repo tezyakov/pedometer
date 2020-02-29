@@ -1,0 +1,17 @@
+$header-height: 40px;
+$row-height: 40px;
+$header-background-color: #1C2025;
+$header-foreground-color: white;
+$font-size: 12px;
+$secondary-font-size: 14px;
+$font-weight: normal;
+$secondary-font-weight: normal;
+$font-style: normal;
+$font-family: 'PT Sans Caption';
+$odd-row-background-color: #EFEFF0;
+$border-color: #EFEFF0;
+$cell-horizontal-padding: 16px;
+$ag-grid-size: 10px;
+
+@import '~ag-grid-community/src/styles/ag-grid.scss';
+@import '~ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss';
