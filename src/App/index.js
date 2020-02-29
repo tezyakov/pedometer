@@ -7,8 +7,12 @@ import Gridd from '../Grid';
 
 const App = () => (
   <div className={styles.container}>
-    <Header />
-    <Gridd />
+    <div className={styles.header}>
+     <Header />
+    </div>
+    <div className={styles.contentContainer}>
+     <Gridd />
+    </div>
   </div>
 )
 

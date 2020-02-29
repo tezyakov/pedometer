@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 
@@ -10,68 +10,69 @@ import styles from './styles.module.scss';
 import '../ag-grid-overrides.scss'
 
 
-const Gridd = () => {
-  const [clicked, setClicked] = React.useState(false);
-  const [values, setValues] = React.useState({
-    columnDefs: [{
-      headerName: "Дата", 
-      field: "date", 
-      editable: true, 
-      width: 158, 
+class Gridd extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicked: false,
+      columnDefs: [{
+        headerName: "Дата", 
+        field: "date", 
+        editable: true, 
+        width: 158, 
 
-    }, {
-      headerName: "Дистанция", 
-      field: "distance", 
-      editable: true, 
-      width: 175,
-    }],
-    rowData: [{
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }]
-  })
+      }, {
+        headerName: "Дистанция", 
+        field: "distance", 
+        editable: true, 
+        width: 175,
+      }],
+      rowData: [{
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }, {
+        date: "Toyota", 
+        distance: "Celica"
+      }]
+    }
+  };
 
-  const getData = async() => {
-    const data = await axios.get('http://localhost:3000/walking');
-    const rowData = data.data;
-    setValues(rowData);
-  }
+  componentDidMount() {
+    fetch('http://localhost:3000/walking')
+    .then(result => result.json())
+    .then(rowData => this.setState({rowData}))
+}
 
-  getData();
-
-  return (
-    <div className={styles.contentContainer}>
-      <div
-        className="ag-theme-balham"
-        style={{
-        height: '500px',
-        width: '335px' }}
-      >
-        <AgGridReact
-        rowHeight={40}
-        enableSorting={true}
-        columnDefs={values.columnDefs}
-        rowData={values.rowData}>
-        </AgGridReact>
-      <button className={styles.gridButton} onClick={() => setClicked(true)}>Подтвердить</button>
-      {clicked ? <InputForm /> : ''}
+  render() {
+    return (
+      <div className={styles.contentContainer}>
+        <div
+          className="ag-theme-balham"
+          style={{
+          height: '500px',
+          width: '335px' }}
+        >
+          <AgGridReact
+          rowHeight={40}
+          enableSorting={true}
+          columnDefs={this.state.columnDefs}
+          rowData={this.state.rowData}>
+          </AgGridReact>
+          <button className={styles.gridButton} onClick={() => this.setState({clicked: true})}>Добавить запись</button>
+          {this.state.clicked ? <InputForm /> : ''}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
-
-
 
 export default Gridd;
