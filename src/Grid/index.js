@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
-import { Provider, connect } from 'react-redux';
+
+import InputForm from '../InputForm';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -10,6 +11,7 @@ import '../ag-grid-overrides.scss'
 
 
 const Gridd = () => {
+  const [clicked, setClicked] = React.useState(false);
   const [values, setValues] = React.useState({
     columnDefs: [{
       headerName: "Дата", 
@@ -48,6 +50,7 @@ const Gridd = () => {
   }
 
   getData();
+
   return (
     <div className={styles.contentContainer}>
       <div
@@ -62,11 +65,13 @@ const Gridd = () => {
         columnDefs={values.columnDefs}
         rowData={values.rowData}>
         </AgGridReact>
-      <button className={styles.gridButton} onClick={() => alert('Work in progress')}>Добавить запись</button>
+      <button className={styles.gridButton} onClick={() => setClicked(true)}>Подтвердить</button>
+      {clicked ? <InputForm /> : ''}
       </div>
     </div>
   );
 };
+
 
 
 export default Gridd;
