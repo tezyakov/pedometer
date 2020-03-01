@@ -3,7 +3,8 @@ import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 
 import InputForm from '../InputForm';
-import correctDate from '../Utils/correctDate'
+import setRigthDate from '../Utils/setRightDate'
+import setRightDistance from '../Utils/setRightDistance'
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -20,13 +21,14 @@ class Gridd extends Component {
         headerName: "Дата", 
         field: "date", 
         editable: true, 
-        width: 158, 
+        width: 144,
+         
 
       }, {
         headerName: "Дистанция", 
         field: "distance", 
         editable: true, 
-        width: 175,
+        width: 189,
       }],
       rowData: [{
         date: "Toyota", 
@@ -50,8 +52,18 @@ class Gridd extends Component {
   componentDidMount() {
     fetch('http://localhost:3000/walking')
     .then(result => result.json())
-    .then(rowData => this.setState({rowData}))
-    //this.setState({this.state.date: correctDate(date)})
+    .then(rowData => {
+      for (let i=0; i < rowData.length; i++) {
+        rowData[i].date = setRigthDate(rowData[i].date);
+      }
+      for (let i=0; i < rowData.length; i++) {
+        rowData[i].distance = setRightDistance(rowData[i].distance);
+      }
+      //console.log(rowData)
+      //let newRowData = distance.map(function(item){return setRigthDate(item)})
+      this.setState({rowData})
+      //console.log(date);
+    })
 }
 
   render() {
@@ -64,12 +76,12 @@ class Gridd extends Component {
           height: '500px',
           width: '335px' }}
         >
-          <AgGridReact
+        <AgGridReact
           rowHeight={40}
           enableSorting={true}
           columnDefs={this.state.columnDefs}
           rowData={this.state.rowData}>
-          </AgGridReact>
+        </AgGridReact>
         </div>
           <button className={styles.gridButton} onClick={() => this.setState({clicked: true})}>Добавить запись</button>
       </div>
@@ -77,4 +89,4 @@ class Gridd extends Component {
   }
 };
 
-export default Gridd;
+export default Gridd; 
