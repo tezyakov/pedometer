@@ -3,6 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 
 import InputForm from '../InputForm';
+import correctDate from '../Utils/correctDate'
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -50,6 +51,7 @@ class Gridd extends Component {
     fetch('http://localhost:3000/walking')
     .then(result => result.json())
     .then(rowData => this.setState({rowData}))
+    //this.setState({this.state.date: correctDate(date)})
 }
 
   render() {
