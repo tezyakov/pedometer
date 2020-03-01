@@ -1,13 +1,18 @@
-.container {
- 
-}
-
-
 .field {
-  width: 100px;
-  /*padding: 5px 5px;*/
+  width: 117px;
+  padding: 4px 4px;
   text-align: center;
-  text-decoration: none;
   font-size: 12px;
   border-radius: 8px;
+}
+
+.button {
+  width: 76px;
+  background-color: #EC174F;
+  margin-top: 16px;
+  border: none;
+  color: white;
+  padding: 4px 4px;
+  text-align: center;
+  font-size: 12px;
 }

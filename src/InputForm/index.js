@@ -28,7 +28,7 @@ const InputForm = () => (
           type="text"
           placeholder="Дистанция"
         />
-        <button>
+        <button className={styles.button}>
           Добавить
         </button>      
     </form>
