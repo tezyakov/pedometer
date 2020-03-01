@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import addUser from '../Redux/action'
 
 import InputForm from '../InputForm';
 import setRigthDate from '../Utils/setRightDate'
@@ -12,7 +13,7 @@ import styles from './styles.module.scss';
 import '../ag-grid-overrides.scss'
 
 
-class Gridd extends Component {
+class Grid extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,8 +23,6 @@ class Gridd extends Component {
         field: "date", 
         editable: true, 
         width: 144,
-         
-
       }, {
         headerName: "Дистанция", 
         field: "distance", 
@@ -50,6 +49,8 @@ class Gridd extends Component {
   };
 
   componentDidMount() {
+    this.setState(this.props.users)
+    console.log(this.props.users)
     fetch('http://localhost:3000/walking')
     .then(result => result.json())
     .then(rowData => {
@@ -57,19 +58,16 @@ class Gridd extends Component {
         rowData[i].date = setRigthDate(rowData[i].date);
       }
       for (let i=0; i < rowData.length; i++) {
-        rowData[i].distance = setRightDistance(rowData[i].distance);
+        rowData[i].distance = setRightDistance(rowData[i].distance); //теперь корректный вывод, но это сломало сортировку столбца (работает только по первому символу)
       }
-      //console.log(rowData)
-      //let newRowData = distance.map(function(item){return setRigthDate(item)})
       this.setState({rowData})
-      //console.log(date);
     })
-}
+  }
 
   render() {
     return (
       <div>
-        {this.state.clicked ? <InputForm /> : ''}
+        {this.state.clicked ? <InputForm /> : ''} 
         <div
           className="ag-theme-balham"
           style={{
@@ -89,4 +87,9 @@ class Gridd extends Component {
   }
 };
 
-export default Gridd; 
+const mapStateToProps = state => {
+  const users = state.userDataReducer;
+  return users;
+}
+
+export default connect(mapStateToProps, {addUser} )(Grid)

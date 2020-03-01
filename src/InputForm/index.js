@@ -10,7 +10,7 @@ const onSubmit = values => {
 
 const InputForm = () => (
   <Form
-    className = {styles.container}
+    className={styles.container}
     onSubmit={onSubmit}
     render={({ handleSubmit }) => (
       <form onSubmit={handleSubmit}>
