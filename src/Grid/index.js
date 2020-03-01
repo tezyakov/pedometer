@@ -54,7 +54,8 @@ class Gridd extends Component {
 
   render() {
     return (
-      <div className={styles.contentContainer}>
+      <div>
+        {this.state.clicked ? <InputForm /> : ''}
         <div
           className="ag-theme-balham"
           style={{
@@ -67,9 +68,8 @@ class Gridd extends Component {
           columnDefs={this.state.columnDefs}
           rowData={this.state.rowData}>
           </AgGridReact>
-          <button className={styles.gridButton} onClick={() => this.setState({clicked: true})}>Добавить запись</button>
-          {this.state.clicked ? <InputForm /> : ''}
         </div>
+          <button className={styles.gridButton} onClick={() => this.setState({clicked: true})}>Добавить запись</button>
       </div>
     );
   }

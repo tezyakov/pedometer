@@ -1,13 +1,12 @@
 .headerContainer {
-  width: 1440px;
+  width: 100%;
   height: 60px;
   display: flex;
-  /*flex: 1;*/
+  flex: 1;
   background-color: black;
 }
 
 .headerContent {
-  flex: 1;
   align-self: center;
   margin-left: 20px;
   color: white;

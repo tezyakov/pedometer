@@ -1,12 +1,3 @@
-/*.contentContainer {
-  width: 1440px;
-  height: 964px;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  margin-top: 100px;
-}*/
-
 .gridButton {
   width: 335px;
   height: 60px;
@@ -15,8 +6,14 @@
   font-family: "PT Sans Caption";
   font-size: 18px;
   line-height: 23px;
-  /*flex: 1;*/
+  flex: 1;
   align-self: center;
   text-align: center;
   border: none;
+  padding-bottom: 10px;
+  @media only screen and (max-width: 335px) {
+    .gridButton {
+      width: 200px
+    }
+  }
 }
