@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { connect } from 'react-redux';
 import addUser from '../Redux/action'
@@ -13,44 +13,42 @@ import styles from './styles.module.scss';
 import '../ag-grid-overrides.scss'
 
 
-class Grid extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clicked: false,
-      columnDefs: [{
-        headerName: "Дата", 
-        field: "date", 
-        editable: true, 
-        width: 144,
-      }, {
-        headerName: "Дистанция", 
-        field: "distance", 
-        editable: true, 
-        width: 189,
-      }],
-      rowData: [{
-        date: "Toyota", 
-        distance: "Celica"
-      }, {
-        date: "Toyota", 
-        distance: "Celica"
-      }, {
-        date: "Toyota", 
-        distance: "Celica"
-      }, {
-        date: "Toyota", 
-        distance: "Celica"
-      }, {
-        date: "Toyota", 
-        distance: "Celica"
-      }]
-    }
-  };
+const Grid = () => {
+  const [clicked, setClicked] = React.useState(false)
+  const [columnDefs, setColumnDefs] = React.useState(
+    [{
+      headerName: "Дата", 
+      field: "date", 
+      editable: true, 
+      width: 144,
+    }, {
+      headerName: "Дистанция", 
+      field: "distance", 
+      editable: true, 
+      width: 189,
+    }]
+  )
 
-  componentDidMount() {
-    this.setState(this.props.users)
-    console.log(this.props.users)
+  const [rowData, setRowData] = React.useState(
+    [{
+      date: "Toyota", 
+      distance: "Celica"
+    }, {
+      date: "Toyota", 
+      distance: "Celica"
+    }, {
+      date: "Toyota", 
+      distance: "Celica"
+    }, {
+      date: "Toyota", 
+      distance: "Celica"
+    }, {
+      date: "Toyota", 
+      distance: "Celica"
+    }]
+  );
+
+  React.useEffect(() => {
     fetch('http://localhost:3000/walking')
     .then(result => result.json())
     .then(rowData => {
@@ -60,36 +58,29 @@ class Grid extends Component {
       for (let i=0; i < rowData.length; i++) {
         rowData[i].distance = setRightDistance(rowData[i].distance); //теперь корректный вывод, но это сломало сортировку столбца (работает только по первому символу)
       }
-      this.setState({rowData})
-    })
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.clicked ? <InputForm /> : ''} 
-        <div
-          className="ag-theme-balham"
-          style={{
-          height: '500px',
-          width: '335px' }}
-        >
-        <AgGridReact
-          rowHeight={40}
-          enableSorting={true}
-          columnDefs={this.state.columnDefs}
-          rowData={this.state.rowData}>
-        </AgGridReact>
-        </div>
-          <button className={styles.gridButton} onClick={() => this.setState({clicked: true})}>Добавить запись</button>
+      setRowData(rowData)
+    })  
+  })
+ 
+  return (
+    <div>
+      {clicked ? <InputForm /> : ''} 
+      <div
+        className="ag-theme-balham"
+        style={{
+        height: '500px',
+        width: '335px' }}
+      >
+      <AgGridReact
+        rowHeight={40}
+        enableSorting={true}
+        columnDefs={columnDefs}
+        rowData={rowData}>
+      </AgGridReact>
       </div>
-    );
-  }
-};
-
-const mapStateToProps = state => {
-  const users = state.userDataReducer;
-  return users;
+        <button className={styles.gridButton} onClick={() => setClicked(true)}>Добавить запись</button>
+    </div>
+  );
 }
 
-export default connect(mapStateToProps, {addUser} )(Grid)
+export default Grid;
