@@ -2,7 +2,9 @@ import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { connect } from 'react-redux';
 
-import addRow from '../Redux/action'
+import addRow from '../Redux/actions/addRow'
+import fetchRowAsync from '../Redux/actions/fetchRowAsync'
+import addRowAsync from '../Redux/actions/addRowAsync'
 import setRightDate from '../Utils/setRightDate';
 import setRightDistance from '../Utils/setRightDistance'
 
@@ -32,16 +34,14 @@ const Grid = (props) => {
   )
 
   React.useEffect(() => {
-    console.log(props)
+   props.fetchRowAsync('http://localhost:3000/');
    /* fetch('http://localhost:3000/walking')
     .then(result => result.json())
     .then(rowData => {
       const newData = rowData.map(item => ({ 
         date: setRightDate(item.date), 
         distance: setRightDistance(item.distance)
-      }))
-
-    })*/
+      }))*/
   },[])
  
   return (
@@ -72,6 +72,5 @@ const mapStateToProps = state => {
   }
 }
 
-
-export default connect(mapStateToProps, {addRow})(Grid);
+export default connect(mapStateToProps, {addRow, fetchRowAsync, addRowAsync})(Grid);
 

@@ -1,4 +1,5 @@
-import { ADD_ROW } from "./action";
+import { ADD_ROW } from './actions/addRow';
+import { ADD_ROW_ASYNC } from './actions/addRowAsync'
 
 const initialState = {
   rowData: []
@@ -11,10 +12,11 @@ function rowReducer(state = initialState, action){
         {
           rowData: [...state.rowData, {date: 'Введите дату', distance: 'Введите расстояние'}]
         }); 
-        /*return {
-          ...state.rowData,
-          rowData: [{ date: '1', distance: '1' } ]
-        }*/
+    case ADD_ROW_ASYNC:
+      return Object.assign({}, state, 
+        {
+          rowData: [...state.rowData, action.rowData]
+        });
    default: 
      return state;
   }
