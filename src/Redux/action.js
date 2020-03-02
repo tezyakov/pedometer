@@ -1,10 +1,9 @@
-export const ADD_USER = 'ADD_USER' // action types
+export const ADD_ROW = 'ADD_ROW'
 
-export function addUser(user) {
+export const addRow = () => { 
   return {
-    type: ADD_USER,
-    user     // action payload
+    type: ADD_ROW,
   }
-}
+};
 
-export default ADD_USER;
+export default addRow;

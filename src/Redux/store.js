@@ -1,4 +1,4 @@
 import { createStore } from "redux";
-import userDataReducer from "./reducer";
+import rowReducer from "./reducer";
 
-export default createStore(userDataReducer);
+export default createStore(rowReducer);

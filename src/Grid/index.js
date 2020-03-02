@@ -1,20 +1,20 @@
 import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { connect } from 'react-redux';
-import addUser from '../Redux/action'
 
-import InputForm from '../InputForm';
-import setRigthDate from '../Utils/setRightDate'
+import addRow from '../Redux/action'
+import setRightDate from '../Utils/setRightDate';
 import setRightDistance from '../Utils/setRightDistance'
 
+import styles from './styles.module.scss';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import styles from './styles.module.scss';
 import '../ag-grid-overrides.scss'
 
 
-const Grid = () => {
-  const [clicked, setClicked] = React.useState(false)
+
+
+const Grid = (props) => {
   const [columnDefs, setColumnDefs] = React.useState(
     [{
       headerName: "Дата", 
@@ -31,43 +31,21 @@ const Grid = () => {
     }]
   )
 
-  const [rowData, setRowData] = React.useState(
-    [{
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }, {
-      date: "Toyota", 
-      distance: "Celica"
-    }]
-  );
-
   React.useEffect(() => {
-    fetch('http://localhost:3000/walking')
+    console.log(props)
+   /* fetch('http://localhost:3000/walking')
     .then(result => result.json())
     .then(rowData => {
-      for (let i=0; i < rowData.length; i++) {
-        rowData[i].date = setRigthDate(rowData[i].date);
-      }
-      for (let i=0; i < rowData.length; i++) {
-        rowData[i].distance = setRightDistance(rowData[i].distance); //теперь вывод в корректном формате, но это сломало сортировку столбца (работает только по первому символу)
-      }
-      setRowData(rowData)
-      console.log(rowData)
-    })  
+      const newData = rowData.map(item => ({ 
+        date: setRightDate(item.date), 
+        distance: setRightDistance(item.distance)
+      }))
+
+    })*/
   },[])
  
   return (
     <div>
-      {clicked ? <InputForm /> : ''} 
       <div
         className="ag-theme-balham"
         style={{
@@ -79,12 +57,21 @@ const Grid = () => {
         enableSorting={true}
         suppressHorizontalScroll={true}
         columnDefs={columnDefs}
-        rowData={rowData}>
+        rowData={props.rowData}>
       </AgGridReact>
       </div>
-      {<button className={styles.gridButton} onClick={() => setRowData(rowData.concat({date: 'Введите дату', distance: 'Введите дистанцию'}))}>Добавить запись</button>}
+      <button className={styles.gridButton} onClick={() => props.addRow({rowData: {date: '1', distance: '1'}})}>Добавить запись</button>
     </div>
   );
 }
 
-export default Grid;
+
+const mapStateToProps = state => {
+  return {
+    rowData: state.rowData
+  }
+}
+
+
+export default connect(mapStateToProps, {addRow})(Grid);
+
