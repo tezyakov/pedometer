@@ -21,11 +21,13 @@ const Grid = () => {
       field: "date", 
       editable: true, 
       width: 144,
+      resizable: false
     }, {
       headerName: "Дистанция", 
       field: "distance", 
       editable: true, 
       width: 189,
+      resizable: false
     }]
   )
 
@@ -56,11 +58,12 @@ const Grid = () => {
         rowData[i].date = setRigthDate(rowData[i].date);
       }
       for (let i=0; i < rowData.length; i++) {
-        rowData[i].distance = setRightDistance(rowData[i].distance); //теперь корректный вывод, но это сломало сортировку столбца (работает только по первому символу)
+        rowData[i].distance = setRightDistance(rowData[i].distance); //теперь вывод в корректном формате, но это сломало сортировку столбца (работает только по первому символу)
       }
       setRowData(rowData)
+      console.log(rowData)
     })  
-  })
+  },[])
  
   return (
     <div>
@@ -74,11 +77,12 @@ const Grid = () => {
       <AgGridReact
         rowHeight={40}
         enableSorting={true}
+        suppressHorizontalScroll={true}
         columnDefs={columnDefs}
         rowData={rowData}>
       </AgGridReact>
       </div>
-        <button className={styles.gridButton} onClick={() => setClicked(true)}>Добавить запись</button>
+      {<button className={styles.gridButton} onClick={() => setRowData(rowData.concat({date: 'Введите дату', distance: 'Введите дистанцию'}))}>Добавить запись</button>}
     </div>
   );
 }
