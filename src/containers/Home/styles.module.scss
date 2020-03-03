@@ -6,9 +6,11 @@
 }
 
 .contentContainer {
+  flex-direction: column;
   background: #E5E5E5;
   display: flex;
   flex: 1;
   justify-content: center;
+  align-items: center;
   padding: 100px;
 } 
